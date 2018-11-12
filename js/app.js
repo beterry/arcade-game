@@ -1,18 +1,18 @@
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function(speed,path) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     //x position
-    this.x = 10;
+    this.x = -83;
     //y position
-    this.y = 10;
+    this.y = path;
     //speed
-    this.speed = 1;
+    this.speed = speed;
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
+    this.sprite = 'images/enemy-bugo.png';
 };
 
 // Update the enemy's position, required method for game
@@ -89,7 +89,7 @@ var Hero = function(){
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-let bug = new Enemy();
+let bug = new Enemy(randomSpeed(),randomPath());
 let player = new Hero();
 //init allEnemies array
 let allEnemies = [bug];
@@ -108,3 +108,11 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+function randomSpeed(){
+  return Math.floor(Math.random() * 150) + 30;
+}
+
+function randomPath(){
+  return ((Math.floor(Math.random() * 4) + 1)*83)+30;
+}
