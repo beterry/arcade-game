@@ -25,13 +25,19 @@ Enemy.prototype.update = function(dt) {
     if (this.x < 505){
       this.x += this.speed*dt;
     } else {
-      //delete or reset?
+        this.reset();
     }
 };
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+Enemy.prototype.reset = function() {
+  this.x = -83
+  this.y = randomPath();
+  this.speed = randomSpeed();
 };
 
 // Now write your own player class
@@ -89,12 +95,15 @@ var Hero = function(){
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-let bug = new Enemy(randomSpeed(),randomPath());
 let player = new Hero();
 //init allEnemies array
-let allEnemies = [bug];
+let allEnemies = [];
 //push new enemy into array
-
+let numOfEnemies = 4;
+for (let i = 0; i<numOfEnemies; i++){
+  let bug = new Enemy(randomSpeed(),randomPath());
+  allEnemies.push(bug);
+}
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -110,9 +119,13 @@ document.addEventListener('keyup', function(e) {
 });
 
 function randomSpeed(){
-  return Math.floor(Math.random() * 150) + 30;
+  return Math.floor(Math.random() * 400) + 75;
 }
 
 function randomPath(){
   return ((Math.floor(Math.random() * 4) + 1)*83)+30;
+}
+
+function randomSpawn(){
+  return Math.floor(Math.random() * 4000);
 }
