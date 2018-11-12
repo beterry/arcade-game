@@ -40,7 +40,7 @@ Enemy.prototype.render = function() {
 
 var Hero = function(){
   this.x = 202;
-  this.y = 404;
+  this.y = 375;
   this.sprite = 'images/char-boy.png';
   this.update = function(){
     //checkCollisions
@@ -51,23 +51,32 @@ var Hero = function(){
   }
   this.handleInput = function(key){
     //update x and y according to input
-    const increment = 83;
+    const incrementY = 83;
+    const incrementX = 101;
     switch(key){
       case 'left':
-        this.x -= increment;
-        console.log('left key is pressed');
+        if (this.x > 0){
+          this.x -= incrementX;
+          console.log('left key is pressed');
+        }
         break;
       case 'right':
-        this.x += increment;
-        console.log('right key is pressed');
+        if (this.x < 404){
+          this.x += incrementX;
+          console.log('right key is pressed');
+        }
         break;
       case 'down':
-        this.y += increment;
-        console.log('down key is pressed');
+        if (this.y <375){
+          this.y += incrementY;
+          console.log('down key is pressed');
+        }
         break;
       case 'up':
-        this.y -= increment;
-        console.log('up key is pressed');
+        if (this.y > 0){
+          this.y -= incrementY;
+          console.log('up key is pressed');
+        }
         break;
     }
   }
