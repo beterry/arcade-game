@@ -3,9 +3,12 @@ var Enemy = function() {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
-        //x position
-        //y position
-        //speed
+    //x position
+    this.x = 10;
+    //y position
+    this.y = 10;
+    //speed
+    this.speed = 1;
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
@@ -19,12 +22,11 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
 
-        //if {enemy is still on gameboard
-          //move forward
-          //increment x by speed * dt
-        //else {
-          //delete or reset?
-        }
+    if (this.x < 505){
+      this.x += this.speed*dt;
+    } else {
+      //delete or reset?
+    }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -36,28 +38,50 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 
-// Hero class
-    //Constructor
-        //properties
-            //x position
-            //y position
-            //sprite images
-        //methods
-            //update
-                //checkCollisions
-                //check for a victory
-            //render
-                //draw character on gameboard
-            //handleInput()
-                //update x and y according to input
-            //reset Hero
-                //sets x and y to original location
+var Hero = function(){
+  this.x = 202;
+  this.y = 404;
+  this.sprite = 'images/char-boy.png';
+  this.update = function(){
+    //checkCollisions
+    //check for a victory
+  }
+  this.render = function(){
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  }
+  this.handleInput = function(key){
+    //update x and y according to input
+    const increment = 83;
+    switch(key){
+      case 'left':
+        this.x -= increment;
+        console.log('left key is pressed');
+        break;
+      case 'right':
+        this.x += increment;
+        console.log('right key is pressed');
+        break;
+      case 'down':
+        this.y += increment;
+        console.log('down key is pressed');
+        break;
+      case 'up':
+        this.y -= increment;
+        console.log('up key is pressed');
+        break;
+    }
+  }
+  this.reset = function(){
+    //sets x and y to original location
+  }
+
+}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 let bug = new Enemy();
-let player = new Player();
+let player = new Hero();
 //init allEnemies array
 let allEnemies = [bug];
 //push new enemy into array
