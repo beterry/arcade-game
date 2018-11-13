@@ -7,8 +7,11 @@
 	vertical-align: baseline;
 }
 
+body{
+  text-align: center;
+}
+
 main {
-    text-align: center;
   	position: absolute;
   	top: 20px;
   	right: 20px;
@@ -51,4 +54,38 @@ header{
 
 canvas{
   margin-top: -25px;
+}
+
+#overlay{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 20px;
+  background-image: url("../images/background.jpg");
+}
+
+#message{
+  position: absolute;
+  width: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.toggle{
+  display: none;
+}
+
+@media screen and (max-width: 600px){
+  .toggle{
+    display: block;
+  }
+}
+
+@media screen and (max-width: 400px){
+  #message{
+    width: 80%;
+  }
 }
