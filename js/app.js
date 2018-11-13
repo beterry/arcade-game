@@ -12,7 +12,7 @@ var Enemy = function(speed,path) {
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bugo.png';
+    this.sprite = 'images/raptor.png';
 };
 
 // Update the enemy's position, required method for game
@@ -46,8 +46,8 @@ Enemy.prototype.reset = function() {
 
 var Hero = function(){
   this.x = 202;
-  this.y = 375;
-  this.sprite = 'images/char-boy.png';
+  this.y = 415;
+  this.sprite = 'images/herbivore.png';
   this.update = function(){
     //checkCollisions
     //check for a victory
@@ -73,7 +73,7 @@ var Hero = function(){
         }
         break;
       case 'down':
-        if (this.y <375){
+        if (this.y <415){
           this.y += incrementY;
           console.log('down key is pressed');
         }
