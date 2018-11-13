@@ -107,12 +107,12 @@ var Engine = (function(global) {
          * for that particular row of the game level.
          */
         var rowImages = [
-                'images/water-block.png',
-                'images/grass-block.png',
-                'images/grass-block.png',
-                'images/grass-block.png',
-                'images/grass-block.png',
-                'images/grass-block.png'
+                'img/water-block.png',
+                'img/grass-block.png',
+                'img/grass-block.png',
+                'img/grass-block.png',
+                'img/grass-block.png',
+                'img/grass-block.png'
             ],
             numRows = 6,
             numCols = 5,
@@ -169,14 +169,14 @@ var Engine = (function(global) {
      * all of these images are properly loaded our game will start.
      */
     Resources.load([
-        'images/stone-block.png',
-        'images/water-block.png',
-        'images/grass-block.png',
-        'images/enemy-bug.png',
-        'images/enemy-bugo.png',
-        'images/char-boy.png',
-        'images/raptor.png',
-        'images/herbivore.png'
+        'img/stone-block.png',
+        'img/water-block.png',
+        'img/grass-block.png',
+        'img/enemy-bug.png',
+        'img/enemy-bugo.png',
+        'img/char-boy.png',
+        'img/raptor.png',
+        'img/herbivore.png'
     ]);
     Resources.onReady(init);
 

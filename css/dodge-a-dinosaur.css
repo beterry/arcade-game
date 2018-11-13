@@ -19,7 +19,7 @@ main {
   	left: 20px;
   	border-radius: 4px;
   	padding: 20px;
-  	background-image: url("../images/background.jpg");
+  	background-image: url("../img/background.jpg");
 }
 
 h1{
@@ -63,7 +63,7 @@ canvas{
   bottom: 0;
   left: 0;
   padding: 20px;
-  background-image: url("../images/background.jpg");
+  background-image: url("../img/background.jpg");
 }
 
 #message{

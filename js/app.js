@@ -20,8 +20,8 @@ var Enemy = function(speed,row) {
     this.width = 50;
     this.head = this.x + this.width;
     // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
-    this.sprite = 'images/raptor.png';
+    // a helper we've provided to easily load img
+    this.sprite = 'img/raptor.png';
 };
 
 // Update the enemy's position, required method for game
@@ -73,7 +73,7 @@ var Hero = function(){
   //set row and column referance
   this.row = 5;
   this.col = 3;
-  this.sprite = 'images/herbivore.png';
+  this.sprite = 'img/herbivore.png';
 
   //ran every tick of the game engine
   this.update = function(){
