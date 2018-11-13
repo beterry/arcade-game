@@ -1,20 +1,19 @@
 // Enemies our player must avoid
-var Enemy = function(speed,path) {
+var Enemy = function(speed,row) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     //x position
     this.x = -83;
     //y position
-    this.y = (path*83);
+    this.y = (row*83);
     //to calculate collisions
-    this.path = path;
-    //to calculate collisions
-    this.head = this.x + 123;
+    this.row = row;
+    this.col = 0;
     //speed
     this.speed = speed;
     this.width = 123;
-    this.height = 83;
+    this.head = this.x + this.width;
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/raptor.png';
@@ -27,19 +26,28 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
 
-    if (this.x < 505){
-      this.x += Math.floor(this.speed*dt);
-    } else {
-        this.reset();
-    }
-    this.head = this.x + 123;
-    if (this.path == player.path){
-      if (this.x < player.x + player.width  && this.x + this.width  > player.x &&
-  		this.y < player.y + player.height && this.y + this.height > player.y) {
-          console.log('collision!');
+      if (this.x < 505){
+        this.x += Math.floor(this.speed*dt);
+        } else {
+          this.reset();
       }
-    }
-};
+
+      this.head = this.x + this.width;
+
+      if (this.x > 404 && this.x < 505) {
+        this.col = 5;
+      } else if (this.x > 303 && this.x < 404) {
+        this.col = 4;
+      } else if (this.x > 202 && this.x < 303) {
+        this.col = 3;
+      } else if (this.x > 101 && this.x < 202) {
+        this.col = 2;
+      } else if (this.x > 0) {
+        this.col = 1;
+      }
+    };
+
+
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
@@ -48,9 +56,8 @@ Enemy.prototype.render = function() {
 
 Enemy.prototype.reset = function() {
   this.x = -83;
-  this.y = (randomPath()*83);
-  this.path = randomPath();
-  this.head = this.x + 123;
+  this.y = (randomRow()*83);
+  this.row = randomRow();
   this.speed = randomSpeed();
 };
 
@@ -61,10 +68,11 @@ Enemy.prototype.reset = function() {
 var Hero = function(){
   this.x = 202;
   this.y = 415;
-  this.path = 5;
+  this.row = 5;
+  this.col = 3;
   this.sprite = 'images/herbivore.png';
   this.update = function(){
-
+    //check for collision
     //check for a victory
   }
   this.render = function(){
@@ -78,26 +86,28 @@ var Hero = function(){
       case 'left':
         if (this.x > 0){
           this.x -= incrementX;
+          this.col -= 1;
           console.log('left key is pressed');
         }
         break;
       case 'right':
         if (this.x < 404){
           this.x += incrementX;
+          this.col += 1;
           console.log('right key is pressed');
         }
         break;
       case 'down':
         if (this.y <415){
           this.y += incrementY;
-          this.path += 1;
+          this.row += 1;
           console.log('down key is pressed');
         }
         break;
       case 'up':
         if (this.y > 0){
           this.y -= incrementY;
-          this.path -= 1;
+          this.row -= 1;
           console.log('up key is pressed');
         }
         break;
@@ -119,7 +129,7 @@ let allEnemies = [];
 //push new enemy into array
 let numOfEnemies = 4;
 for (let i = 0; i<numOfEnemies; i++){
-  let raptor = new Enemy(randomSpeed(),randomPath());
+  let raptor = new Enemy(randomSpeed(),randomRow());
   allEnemies.push(raptor);
 }
 
@@ -140,12 +150,8 @@ function randomSpeed(){
   return Math.floor(Math.random() * 400) + 75;
 }
 
-function randomPath(){
+function randomRow(){
   return (Math.floor(Math.random() * 4) + 1);
-}
-
-function randomSpawn(){
-  return Math.floor(Math.random() * 4000);
 }
 
 function checkCollisions(){
