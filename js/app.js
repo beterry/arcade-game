@@ -1,21 +1,22 @@
+//declare globals to store and display score
 let displayScore = document.getElementById('score');
 let score = 0;
 displayScore.textContent = score;
 
 // Enemies our player must avoid
+// randomSpeed()  and randomRow() are passed below
 var Enemy = function(speed,row) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-
     //x position
     this.x = -83;
-    //y position
+    //y position, each row is 83 pixels high
     this.y = (row*83);
-    //to calculate collisions
+    //to calculate collisions, keep track of which square
+    //the ememies are in by tracking columns and rows
     this.row = row;
     this.col = 0;
     //speed
     this.speed = speed;
+    //this is used to calculate the front on the sprite
     this.width = 50;
     this.head = this.x + this.width;
     // The image/sprite for our enemies, this uses
@@ -29,15 +30,14 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-
-      if (this.x < 505){
-        this.x += Math.floor(this.speed*dt);
+      if (this.x < 505){ //505 is the width of the game board
+        this.x += this.speed*dt;
         } else {
           this.reset();
       }
-
+      //updates the front of the enemy
       this.head = this.x + this.width;
-
+      //updates this.col to accuratly track the column
       if (this.head > 404) {
         this.col = 5;
       } else if (this.head > 303 && this.head < 404) {
@@ -51,13 +51,12 @@ Enemy.prototype.update = function(dt) {
       }
     };
 
-
-
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+//used to reset the enemy to the left of the game board
 Enemy.prototype.reset = function() {
   this.x = -83;
   this.row = randomRow();
@@ -66,25 +65,29 @@ Enemy.prototype.reset = function() {
   this.speed = randomSpeed();
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
-
+//the playable character
 var Hero = function(){
+  //set coordinates
   this.x = 202;
   this.y = 415;
+  //set row and column referance
   this.row = 5;
   this.col = 3;
   this.sprite = 'images/herbivore.png';
 
+  //ran every tick of the game engine
   this.update = function(){
+    //checks for enemies on the same row
     for (let enemy of allEnemies){
       if (this.row == enemy.row){
+          //if enemy is also in the same column, reset
           if (this.col == enemy.col){
             this.reset();
           }
       }
     }
+    //checks if the player is in the water
+    //if so, resets player and updates score
     if (this.row == 0){
       score += 1;
       displayScore.textContent = score;
@@ -92,46 +95,46 @@ var Hero = function(){
     }
   }
 
+  //draw the player on the screen
   this.render = function(){
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
 
+  //intreprets arrow key input from user
   this.handleInput = function(key){
-    //update x and y according to input
+    //constants used to update x,y coordinates
     const incrementY = 83;
     const incrementX = 101;
+    //a switch statment to update coordintes, rows, and columns
     switch(key){
       case 'left':
         if (this.x > 0){
           this.x -= incrementX;
           this.col -= 1;
-          console.log('left key is pressed');
         }
         break;
       case 'right':
         if (this.x < 404){
           this.x += incrementX;
           this.col += 1;
-          console.log('right key is pressed');
         }
         break;
       case 'down':
         if (this.y <415){
           this.y += incrementY;
           this.row += 1;
-          console.log('down key is pressed');
         }
         break;
       case 'up':
         if (this.y > 0){
           this.y -= incrementY;
           this.row -= 1;
-          console.log('up key is pressed');
         }
         break;
     }
   }
 
+  //resets player to the beginning
   this.reset = function(){
     this.x = 202;
     this.y = 415;
@@ -141,21 +144,20 @@ var Hero = function(){
 
 }
 
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 let player = new Hero();
 //init allEnemies array
 let allEnemies = [];
-//push new enemy into array
-let numOfEnemies = 1;
+//variable for number of enemies
+let numOfEnemies = 4;
+//push new enemies into array
 for (let i = 0; i<numOfEnemies; i++){
   let raptor = new Enemy(randomSpeed(),randomRow());
   allEnemies.push(raptor);
 }
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+// This listens for key presses and sends the keys to the
+// Player.handleInput() method
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
@@ -167,14 +169,12 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
+//returns a random speed between 75 and 400
 function randomSpeed(){
   return Math.floor(Math.random() * 400) + 75;
 }
 
+//returns a random row between 1 and 4
 function randomRow(){
   return (Math.floor(Math.random() * 4) + 1);
-}
-
-function checkVictory(){
-  return (player.row == 0);
 }
