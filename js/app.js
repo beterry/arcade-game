@@ -81,6 +81,9 @@ var Hero = function(){
           }
       }
     }
+    if (this.row == 0){
+      this.reset();
+    }
   }
 
   this.render = function(){
