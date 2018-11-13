@@ -1,3 +1,7 @@
+let displayScore = document.getElementById('score');
+let score = 0;
+displayScore.textContent = score;
+
 // Enemies our player must avoid
 var Enemy = function(speed,row) {
     // Variables applied to each of our instances go here,
@@ -82,6 +86,8 @@ var Hero = function(){
       }
     }
     if (this.row == 0){
+      score += 1;
+      displayScore.textContent = score;
       this.reset();
     }
   }
