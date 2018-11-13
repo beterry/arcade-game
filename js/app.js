@@ -12,7 +12,7 @@ var Enemy = function(speed,row) {
     this.col = 0;
     //speed
     this.speed = speed;
-    this.width = 123;
+    this.width = 50;
     this.head = this.x + this.width;
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
@@ -34,15 +34,15 @@ Enemy.prototype.update = function(dt) {
 
       this.head = this.x + this.width;
 
-      if (this.x > 404 && this.x < 505) {
+      if (this.head > 404) {
         this.col = 5;
-      } else if (this.x > 303 && this.x < 404) {
+      } else if (this.head > 303 && this.head < 404) {
         this.col = 4;
-      } else if (this.x > 202 && this.x < 303) {
+      } else if (this.head > 202 && this.head < 303) {
         this.col = 3;
-      } else if (this.x > 101 && this.x < 202) {
+      } else if (this.head > 101 && this.head < 202) {
         this.col = 2;
-      } else if (this.x > 0) {
+      } else if (this.head > 0) {
         this.col = 1;
       }
     };
@@ -56,8 +56,9 @@ Enemy.prototype.render = function() {
 
 Enemy.prototype.reset = function() {
   this.x = -83;
-  this.y = (randomRow()*83);
   this.row = randomRow();
+  this.y = (this.row*83);
+  this.col = 0;
   this.speed = randomSpeed();
 };
 
@@ -71,13 +72,21 @@ var Hero = function(){
   this.row = 5;
   this.col = 3;
   this.sprite = 'images/herbivore.png';
+
   this.update = function(){
-    //check for collision
-    //check for a victory
+    for (let enemy of allEnemies){
+      if (this.row == enemy.row){
+          if (this.col == enemy.col){
+            this.reset();
+          }
+      }
+    }
   }
+
   this.render = function(){
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
+
   this.handleInput = function(key){
     //update x and y according to input
     const incrementY = 83;
@@ -113,9 +122,12 @@ var Hero = function(){
         break;
     }
   }
+
   this.reset = function(){
     this.x = 202;
     this.y = 415;
+    this.row = 5;
+    this.col = 3;
   }
 
 }
@@ -127,7 +139,7 @@ let player = new Hero();
 //init allEnemies array
 let allEnemies = [];
 //push new enemy into array
-let numOfEnemies = 4;
+let numOfEnemies = 1;
 for (let i = 0; i<numOfEnemies; i++){
   let raptor = new Enemy(randomSpeed(),randomRow());
   allEnemies.push(raptor);
@@ -154,11 +166,6 @@ function randomRow(){
   return (Math.floor(Math.random() * 4) + 1);
 }
 
-function checkCollisions(){
-  for (let i = 0; i<numOfEnemies; i++){
-    if (allEnemies[i].head == player.x){
-      return true;
-    }
-  }
-  return false;
+function checkVictory(){
+  return (player.row == 0);
 }
