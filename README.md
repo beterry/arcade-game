@@ -56,3 +56,21 @@ initailize a Hero called _player_
   - updates properties depending on the user's input
 - reset()
   - called when update() is true
+#### Global variables and functions
+- displayScore
+- score
+- player
+- allEnemies
+- numOfEnemies
+  - edit to change the number of ememies on the game board
+- randomSpeed()
+- randomRow()
+### engine.js
+This script loads the images for the game and calls the update() and render() functions for both the enemies and the players every fraction of a second. The game board is nothing more than a "flipbook" which creates motion.
+### resources.js
+Caches images for better performance.
+## Issues
+If the width of your screen is less than 600px, the game will not load and you will get an "I'm Sorry" screen. Enlarge your window.
+## Author
+Ben Terry
+developmentosaurus.com
